@@ -61,6 +61,12 @@
             <artifactId>muzhi-generator</artifactId>
         </dependency>
 
+        <!-- 代码生成-->
+        <dependency>
+            <groupId>com.muzhi</groupId>
+            <artifactId>muzhi-teach</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
