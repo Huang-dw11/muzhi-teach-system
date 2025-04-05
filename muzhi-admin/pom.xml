@@ -67,6 +67,12 @@
             <artifactId>muzhi-teach</artifactId>
         </dependency>
 
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>com.muzhi</groupId>
+            <artifactId>muzhi-common</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

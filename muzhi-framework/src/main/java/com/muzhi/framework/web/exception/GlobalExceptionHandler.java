@@ -1,6 +1,8 @@
 package com.muzhi.framework.web.exception;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.muzhi.common.exception.CollegeHasTeachersException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -141,5 +143,13 @@ public class GlobalExceptionHandler
     public AjaxResult handleDemoModeException(DemoModeException e)
     {
         return AjaxResult.error("演示模式，不允许操作");
+    }
+
+    /**
+     * 删除学院类异常
+     */
+    @ExceptionHandler(CollegeHasTeachersException.class)
+    public AjaxResult handleCollegeHasTeachers(CollegeHasTeachersException e) {
+        return AjaxResult.error(e.getMessage());
     }
 }
