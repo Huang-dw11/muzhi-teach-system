@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muzhi.teach.mapper.ClassMapper">
+    
+    <resultMap type="Clazz" id="ClassResult">
+        <result property="id"    column="id"    />
+        <result property="collegeId"    column="college_id"    />
+        <result property="expertiseId"    column="expertise_id"    />
+        <result property="classNumber"    column="class_number"    />
+        <result property="grade"    column="grade"    />
+        <result property="studentCount"    column="student_count"    />
+        <result property="scheduleId"    column="schedule_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+    </resultMap>
+
+    <sql id="selectClassVo">
+        select id, college_id, expertise_id, class_number, grade, student_count, schedule_id, create_time, update_time, create_by, update_by from tb_class
+    </sql>
+
+    <select id="selectClassList" parameterType="Clazz" resultMap="ClassResult">
+        <include refid="selectClassVo"/>
+        <where>  
+            <if test="collegeId != null "> and college_id = #{collegeId}</if>
+            <if test="expertiseId != null "> and expertise_id = #{expertiseId}</if>
+            <if test="classNumber != null  and classNumber != ''"> and class_number = #{classNumber}</if>
+        </where>
+    </select>
+    
+    <select id="selectClassById" parameterType="Long" resultMap="ClassResult">
+        <include refid="selectClassVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectClassVOList" resultType="com.muzhi.teach.domain.vo.ClazzVO">
+        select tc.*,te.expertise_name,te.college_name from tb_expertise te left join tb_class tc on te.id = tc.expertise_id
+        <where>
+            <if test="collegeId != null "> and tc.college_id = #{collegeId}</if>
+            <if test="expertiseId != null "> and tc.expertise_id = #{expertiseId}</if>
+            <if test="classNumber != null  and classNumber != ''"> and tc.class_number = #{classNumber}</if>
+        </where>
+    </select>
+
+    <insert id="insertClass" parameterType="Clazz" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="collegeId != null">college_id,</if>
+            <if test="expertiseId != null">expertise_id,</if>
+            <if test="classNumber != null and classNumber != ''">class_number,</if>
+            <if test="grade != null">grade,</if>
+            <if test="studentCount != null">student_count,</if>
+            <if test="scheduleId != null">schedule_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="collegeId != null">#{collegeId},</if>
+            <if test="expertiseId != null">#{expertiseId},</if>
+            <if test="classNumber != null and classNumber != ''">#{classNumber},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="studentCount != null">#{studentCount},</if>
+            <if test="scheduleId != null">#{scheduleId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateClass" parameterType="Clazz">
+        update tb_class
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="collegeId != null">college_id = #{collegeId},</if>
+            <if test="expertiseId != null">expertise_id = #{expertiseId},</if>
+            <if test="classNumber != null and classNumber != ''">class_number = #{classNumber},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="studentCount != null">student_count = #{studentCount},</if>
+            <if test="scheduleId != null">schedule_id = #{scheduleId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClassById" parameterType="Long">
+        delete from tb_class where id = #{id}
+    </delete>
+
+    <delete id="deleteClassByIds" parameterType="String">
+        delete from tb_class where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

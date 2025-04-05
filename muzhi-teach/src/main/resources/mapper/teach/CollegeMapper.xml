@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muzhi.teach.mapper.CollegeMapper">
+    
+    <resultMap type="College" id="CollegeResult">
+        <result property="id"    column="id"    />
+        <result property="collegeCode"    column="college_code"    />
+        <result property="collegeName"    column="college_name"    />
+        <result property="affiliation"    column="affiliation"    />
+        <result property="collegeType"    column="college_type"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectCollegeVo">
+        select id, college_code, college_name, affiliation, college_type, introduction, create_time, update_time, create_by, update_by, remark from tb_college
+    </sql>
+
+    <select id="selectCollegeList" parameterType="College" resultMap="CollegeResult">
+        <include refid="selectCollegeVo"/>
+        <where>  
+            <if test="collegeCode != null  and collegeCode != ''"> and college_code = #{collegeCode}</if>
+            <if test="collegeName != null  and collegeName != ''"> and college_name like concat('%', #{collegeName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCollegeById" parameterType="Long" resultMap="CollegeResult">
+        <include refid="selectCollegeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCollege" parameterType="College" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_college
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="collegeCode != null and collegeCode != ''">college_code,</if>
+            <if test="collegeName != null and collegeName != ''">college_name,</if>
+            <if test="affiliation != null and affiliation != ''">affiliation,</if>
+            <if test="collegeType != null and collegeType != ''">college_type,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="collegeCode != null and collegeCode != ''">#{collegeCode},</if>
+            <if test="collegeName != null and collegeName != ''">#{collegeName},</if>
+            <if test="affiliation != null and affiliation != ''">#{affiliation},</if>
+            <if test="collegeType != null and collegeType != ''">#{collegeType},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCollege" parameterType="College" >
+        update tb_college
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="collegeCode != null and collegeCode != ''">college_code = #{collegeCode},</if>
+            <if test="collegeName != null and collegeName != ''">college_name = #{collegeName},</if>
+            <if test="affiliation != null and affiliation != ''">affiliation = #{affiliation},</if>
+            <if test="collegeType != null and collegeType != ''">college_type = #{collegeType},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCollegeById" parameterType="Long">
+        delete from tb_college where id = #{id}
+    </delete>
+
+    <delete id="deleteCollegeByIds" parameterType="String">
+        delete from tb_college where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

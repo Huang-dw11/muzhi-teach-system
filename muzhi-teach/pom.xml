@@ -15,6 +15,12 @@
             <groupId>com.muzhi</groupId>
             <artifactId>muzhi-framework</artifactId>
         </dependency>
+
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>com.muzhi</groupId>
+            <artifactId>muzhi-common</artifactId>
+        </dependency>
     </dependencies>
 
     <artifactId>muzhi-teach</artifactId>
