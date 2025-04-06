@@ -4,18 +4,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.muzhi.common.annotation.Excel;
 import com.muzhi.common.core.domain.BaseEntity;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 专业管理对象 tb_expertise
  * 
  * @author hhh
- * @date 2025-04-05
+ * @date 2025-04-06
  */
+@Mapper
 public class Expertise extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 序列 */
+    /** 专业主键ID */
     private Long id;
 
     /** 专业编码 */
@@ -35,11 +37,15 @@ public class Expertise extends BaseEntity
 
     /** 培养层次 */
     @Excel(name = "培养层次")
-    private String educationLevel;
+    private Long educationLevel;
 
     /** 学位授予类型 */
     @Excel(name = "学位授予类型")
-    private String degreeType;
+    private Long degreeType;
+
+    /** 门类、专业类 */
+    @Excel(name = "门类、专业类")
+    private Long categoryId;
 
     /** 学制（年） */
     @Excel(name = "学制", readConverterExp = "年=")
@@ -98,24 +104,34 @@ public class Expertise extends BaseEntity
         return collegeName;
     }
 
-    public void setEducationLevel(String educationLevel) 
+    public void setEducationLevel(Long educationLevel) 
     {
         this.educationLevel = educationLevel;
     }
 
-    public String getEducationLevel() 
+    public Long getEducationLevel() 
     {
         return educationLevel;
     }
 
-    public void setDegreeType(String degreeType) 
+    public void setDegreeType(Long degreeType) 
     {
         this.degreeType = degreeType;
     }
 
-    public String getDegreeType() 
+    public Long getDegreeType() 
     {
         return degreeType;
+    }
+
+    public void setCategoryId(Long categoryId) 
+    {
+        this.categoryId = categoryId;
+    }
+
+    public Long getCategoryId() 
+    {
+        return categoryId;
     }
 
     public void setDuration(Long duration) 
@@ -148,13 +164,13 @@ public class Expertise extends BaseEntity
             .append("collegeName", getCollegeName())
             .append("educationLevel", getEducationLevel())
             .append("degreeType", getDegreeType())
+            .append("categoryId", getCategoryId())
             .append("duration", getDuration())
             .append("introduction", getIntroduction())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
             .append("createBy", getCreateBy())
             .append("updateBy", getUpdateBy())
-            .append("remark", getRemark())
             .toString();
     }
 }

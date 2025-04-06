@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.muzhi.teach.domain.Clazz;
 import com.muzhi.teach.domain.vo.ClazzVO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 班级管理Mapper接口
@@ -11,6 +12,7 @@ import com.muzhi.teach.domain.vo.ClazzVO;
  * @author hhh
  * @date 2025-04-05
  */
+@Mapper
 public interface ClassMapper {
     /**
      * 查询班级管理

@@ -3,6 +3,7 @@ package com.muzhi.teach.mapper;
 import java.util.List;
 
 import com.muzhi.teach.domain.Expertise;
+import com.muzhi.teach.domain.vo.ExpertiseVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -11,7 +12,7 @@ import org.apache.ibatis.annotations.Update;
  * 专业管理Mapper接口
  *
  * @author hhh
- * @date 2025-04-05
+ * @date 2025-04-06
  */
 @Mapper
 public interface ExpertiseMapper {
@@ -64,12 +65,20 @@ public interface ExpertiseMapper {
     public int deleteExpertiseByIds(Long[] ids);
 
     /**
-     * 同步修改collegeName
+     * 修改院系名称时，同步修改专业包含的院系名
      *
      * @param collegeName
      * @param collegeId
-     * @return 结果
+     * @return
      */
     @Update("update tb_expertise set college_name = #{collegeName} where college_id = #{collegeId}")
     public int updateByCollegeId(@Param("collegeName") String collegeName, @Param("collegeId") Long collegeId);
+
+    /**
+     * 查询专业信息和对应的门类
+     *
+     * @param expertise
+     * @return 专业管理集合
+     */
+    public List<ExpertiseVO> selectExpertiseVOList(Expertise expertise);
 }

@@ -2,6 +2,7 @@ package com.muzhi.teach.service;
 
 import java.util.List;
 import com.muzhi.teach.domain.Clazz;
+import com.muzhi.teach.domain.dto.ClazzDTO;
 import com.muzhi.teach.domain.vo.ClazzVO;
 
 /**
@@ -67,4 +68,12 @@ public interface IClassService
      * @return ClazzVO集合
      */
     public List<ClazzVO> selectClassVOList(Clazz clazz);
+
+    /**
+     * 批量新增班级管理
+     *
+     * @param clazzDTO 班级管理
+     * @return 结果
+     */
+    public int insertClazzDTO(ClazzDTO clazzDTO);
 }

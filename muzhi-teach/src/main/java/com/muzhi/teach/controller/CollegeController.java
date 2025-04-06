@@ -25,14 +25,13 @@ import com.muzhi.common.core.page.TableDataInfo;
 
 /**
  * 学院管理Controller
- * 
+ *
  * @author hhh
  * @date 2025-04-04
  */
 @RestController
 @RequestMapping("/teach/college")
-public class CollegeController extends BaseController
-{
+public class CollegeController extends BaseController {
     @Autowired
     private ICollegeService collegeService;
     @Autowired
@@ -43,8 +42,7 @@ public class CollegeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('teach:college:list')")
     @GetMapping("/list")
-    public TableDataInfo list(College college)
-    {
+    public TableDataInfo list(College college) {
         startPage();
         List<College> list = collegeService.selectCollegeList(college);
         return getDataTable(list);
@@ -56,8 +54,7 @@ public class CollegeController extends BaseController
     @PreAuthorize("@ss.hasPermi('teach:college:export')")
     @Log(title = "学院管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, College college)
-    {
+    public void export(HttpServletResponse response, College college) {
         List<College> list = collegeService.selectCollegeList(college);
         ExcelUtil<College> util = new ExcelUtil<College>(College.class);
         util.exportExcel(response, list, "学院管理数据");
@@ -68,8 +65,7 @@ public class CollegeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('teach:college:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
+    public AjaxResult getInfo(@PathVariable("id") Long id) {
         return success(collegeService.selectCollegeById(id));
     }
 
@@ -79,8 +75,7 @@ public class CollegeController extends BaseController
     @PreAuthorize("@ss.hasPermi('teach:college:add')")
     @Log(title = "学院管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody College college)
-    {
+    public AjaxResult add(@RequestBody College college) {
         return toAjax(collegeService.insertCollege(college));
     }
 
@@ -90,8 +85,7 @@ public class CollegeController extends BaseController
     @PreAuthorize("@ss.hasPermi('teach:college:edit')")
     @Log(title = "学院管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody College college)
-    {
+    public AjaxResult edit(@RequestBody College college) {
         return toAjax(collegeService.updateCollege(college));
     }
 
@@ -100,9 +94,8 @@ public class CollegeController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('teach:college:remove')")
     @Log(title = "学院管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
+    @DeleteMapping("/{ids}")
+    public AjaxResult remove(@PathVariable Long[] ids) {
         return toAjax(collegeService.deleteCollegeByIds(ids));
     }
 }

@@ -2,6 +2,8 @@ package com.muzhi.teach.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.muzhi.teach.domain.vo.ExpertiseVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ import com.muzhi.common.core.page.TableDataInfo;
  * 专业管理Controller
  * 
  * @author hhh
- * @date 2025-04-05
+ * @date 2025-04-06
  */
 @RestController
 @RequestMapping("/teach/expertise")
@@ -42,7 +44,8 @@ public class ExpertiseController extends BaseController
     public TableDataInfo list(Expertise expertise)
     {
         startPage();
-        List<Expertise> list = expertiseService.selectExpertiseList(expertise);
+//        List<Expertise> list = expertiseService.selectExpertiseList(expertise);
+        List<ExpertiseVO> list = expertiseService.selectExpertiseVOList(expertise);
         return getDataTable(list);
     }
 

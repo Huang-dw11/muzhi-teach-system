@@ -82,7 +82,9 @@ public class CollegeServiceImpl implements ICollegeService
         college.setUpdateTime(DateUtils.getNowDate());
         int result = collegeMapper.updateCollege(college);
 
-        expertiseMapper.updateByCollegeId(college.getCollegeName(), college.getId());
+        if (college.getCollegeCode() != null){
+            expertiseMapper.updateByCollegeId(college.getCollegeName(), college.getId());
+        }
         return result;
     }
 
