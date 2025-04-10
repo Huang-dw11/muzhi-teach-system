@@ -12,23 +12,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="collegeName"    column="college_name"    />
         <result property="educationLevel"    column="education_level"    />
         <result property="degreeType"    column="degree_type"    />
+        <result property="categoryId"    column="category_id"    />
         <result property="duration"    column="duration"    />
         <result property="introduction"    column="introduction"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
         <result property="createBy"    column="create_by"    />
         <result property="updateBy"    column="update_by"    />
-        <result property="remark"    column="remark"    />
     </resultMap>
 
     <sql id="selectExpertiseVo">
-        select id, expertise_code, expertise_name, college_id, college_name, education_level, degree_type, duration, introduction, create_time, update_time, create_by, update_by, remark from tb_expertise
+        select id, expertise_code, expertise_name, college_id, college_name, education_level, degree_type, category_id, duration, introduction, create_time, update_time, create_by, update_by from tb_expertise
     </sql>
 
     <select id="selectExpertiseList" parameterType="Expertise" resultMap="ExpertiseResult">
         <include refid="selectExpertiseVo"/>
         <where>  
-            <if test="expertiseCode != null  and expertiseCode != ''"> and expertise_code = #{expertiseCode}</if>
             <if test="expertiseName != null  and expertiseName != ''"> and expertise_name like concat('%', #{expertiseName}, '%')</if>
             <if test="collegeId != null "> and college_id = #{collegeId}</if>
         </where>
@@ -37,6 +36,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectExpertiseById" parameterType="Long" resultMap="ExpertiseResult">
         <include refid="selectExpertiseVo"/>
         where id = #{id}
+    </select>
+    <select id="selectExpertiseVOList" resultType="com.muzhi.teach.domain.vo.ExpertiseVO">
+        select te.*,tc.category_name as categoryName from tb_expertise te left join tb_category tc on te.category_id = tc.category_value
+        <where>
+            <if test="expertiseName != null  and expertiseName != ''"> and te.expertise_name like concat('%', #{expertiseName}, '%')</if>
+            <if test="collegeId != null "> and te.college_id = #{collegeId}</if>
+        </where>
+        order by te.college_id
     </select>
 
     <insert id="insertExpertise" parameterType="Expertise" useGeneratedKeys="true" keyProperty="id">
@@ -48,13 +55,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="collegeName != null">college_name,</if>
             <if test="educationLevel != null">education_level,</if>
             <if test="degreeType != null">degree_type,</if>
+            <if test="categoryId != null">category_id,</if>
             <if test="duration != null">duration,</if>
             <if test="introduction != null">introduction,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="createBy != null">create_by,</if>
             <if test="updateBy != null">update_by,</if>
-            <if test="remark != null">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="expertiseCode != null and expertiseCode != ''">#{expertiseCode},</if>
@@ -63,13 +70,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="collegeName != null">#{collegeName},</if>
             <if test="educationLevel != null">#{educationLevel},</if>
             <if test="degreeType != null">#{degreeType},</if>
+            <if test="categoryId != null">#{categoryId},</if>
             <if test="duration != null">#{duration},</if>
             <if test="introduction != null">#{introduction},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="updateBy != null">#{updateBy},</if>
-            <if test="remark != null">#{remark},</if>
          </trim>
     </insert>
 
@@ -82,13 +89,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="collegeName != null">college_name = #{collegeName},</if>
             <if test="educationLevel != null">education_level = #{educationLevel},</if>
             <if test="degreeType != null">degree_type = #{degreeType},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
             <if test="duration != null">duration = #{duration},</if>
             <if test="introduction != null">introduction = #{introduction},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
-            <if test="remark != null">remark = #{remark},</if>
         </trim>
         where id = #{id}
     </update>

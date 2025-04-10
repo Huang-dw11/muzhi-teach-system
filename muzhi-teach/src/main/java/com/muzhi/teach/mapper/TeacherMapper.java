@@ -1,6 +1,9 @@
 package com.muzhi.teach.mapper;
 
 import java.util.List;
+
+import com.muzhi.common.enums.BusinessType;
+import com.muzhi.teach.annotation.AutoFill;
 import com.muzhi.teach.domain.Teacher;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -35,6 +38,7 @@ public interface TeacherMapper
      * @param teacher 教师信息
      * @return 结果
      */
+    @AutoFill(value = BusinessType.INSERT)
     public int insertTeacher(Teacher teacher);
 
     /**
@@ -43,6 +47,7 @@ public interface TeacherMapper
      * @param teacher 教师信息
      * @return 结果
      */
+    @AutoFill(value = BusinessType.UPDATE)
     public int updateTeacher(Teacher teacher);
 
     /**

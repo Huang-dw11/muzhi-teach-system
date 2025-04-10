@@ -8,10 +8,10 @@ import lombok.Data;
 public class ClazzVO extends Clazz {
 
     /** 所属院系名称 */
-    @Excel(name = "所属院系ID")
+    @Excel(name = "所属院系")
     private String collegeName;
 
     /** 所属专业名称 */
-    @Excel(name = "所属专业ID")
+    @Excel(name = "所属专业")
     private String expertiseName;
 }

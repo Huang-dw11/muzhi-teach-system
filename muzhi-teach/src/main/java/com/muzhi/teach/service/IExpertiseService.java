@@ -2,12 +2,13 @@ package com.muzhi.teach.service;
 
 import java.util.List;
 import com.muzhi.teach.domain.Expertise;
+import com.muzhi.teach.domain.vo.ExpertiseVO;
 
 /**
  * 专业管理Service接口
  * 
  * @author hhh
- * @date 2025-04-05
+ * @date 2025-04-06
  */
 public interface IExpertiseService 
 {
@@ -58,4 +59,12 @@ public interface IExpertiseService
      * @return 结果
      */
     public int deleteExpertiseById(Long id);
+
+    /**
+     * 查询专业信息和对应的门类
+     *
+     * @param expertise
+     * @return 专业管理集合
+     */
+    public List<ExpertiseVO> selectExpertiseVOList(Expertise expertise);
 }

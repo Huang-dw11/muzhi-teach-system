@@ -1,14 +1,20 @@
 package com.muzhi.teach.service.impl;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 import java.util.Objects;
 
 import com.muzhi.common.exception.CollegeHasTeachersException;
 import com.muzhi.common.utils.DateUtils;
+import com.muzhi.teach.config.ClassNumberGenerator;
+import com.muzhi.teach.domain.College;
 import com.muzhi.teach.domain.Expertise;
+import com.muzhi.teach.domain.dto.ClazzDTO;
 import com.muzhi.teach.domain.vo.ClazzVO;
+import com.muzhi.teach.mapper.CollegeMapper;
 import com.muzhi.teach.mapper.ExpertiseMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.muzhi.teach.mapper.ClassMapper;
@@ -27,6 +33,10 @@ public class ClassServiceImpl implements IClassService {
     private ClassMapper classMapper;
     @Autowired
     private ExpertiseMapper expertiseMapper;
+    @Autowired
+    private CollegeMapper collegeMapper;
+    @Autowired
+    private ClassNumberGenerator classNumberGenerator;
 
     /**
      * 查询班级管理
@@ -58,13 +68,6 @@ public class ClassServiceImpl implements IClassService {
      */
     @Override
     public int insertClass(Clazz clazz) {
-        Expertise expertise = expertiseMapper.selectExpertiseById(clazz.getExpertiseId());
-        if (expertise == null) {
-            throw new CollegeHasTeachersException("该学院未开设专业");
-        } else if (!Objects.equals(expertise.getCollegeId(), clazz.getExpertiseId())) {
-            throw new CollegeHasTeachersException("该学院不存在此专业");
-        }
-
         clazz.setCreateTime(DateUtils.getNowDate());
         return classMapper.insertClass(clazz);
     }
@@ -112,5 +115,43 @@ public class ClassServiceImpl implements IClassService {
     @Override
     public List<ClazzVO> selectClassVOList(Clazz clazz) {
         return classMapper.selectClassVOList(clazz);
+    }
+
+    /**
+     * 批量新增班级管理
+     *
+     * @param clazzDTO 班级管理
+     * @return 结果
+     */
+    @Override
+    public int insertClazzDTO(ClazzDTO clazzDTO) {
+        Clazz clazz = new Clazz();
+        StringBuilder builder = new StringBuilder();
+        BeanUtils.copyProperties(clazzDTO,clazz);
+
+        Expertise expertise = expertiseMapper.selectExpertiseById(clazz.getExpertiseId());
+        if (expertise == null) {
+            throw new CollegeHasTeachersException("该学院未开设专业");
+        } else if (!Objects.equals(expertise.getCollegeId(), clazz.getCollegeId())) {
+            throw new CollegeHasTeachersException("该学院不存在此专业");
+        }
+
+        // 23-5-01-08 入学年份后两位-学生类型：5为本科 6为研究生-所属学院后两位-专业编码5-6位
+        // 获取当前年份
+        String year = LocalDate.now().toString().substring(2, 4);
+
+        // 获取学院编码
+        String collegeById = collegeMapper.selectCollegeById(clazz.getCollegeId()).getCollegeCode().substring(4);
+
+        //获取专业编码
+        String expertiseCodeId = expertise.getExpertiseCode().substring(4,6);
+
+        String clazzNumberTemp = builder.append(year).append(clazz.getGrade()).append(collegeById).append(expertiseCodeId).toString();
+
+        String clazzNumber = classNumberGenerator.generateClassNumber(clazzNumberTemp,"clazz");
+
+        clazz.setClassNumber(clazzNumber);
+        clazz.setCreateTime(DateUtils.getNowDate());
+        return classMapper.insertClass(clazz);
     }
 }

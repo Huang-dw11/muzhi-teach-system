@@ -1,5 +1,7 @@
 package com.muzhi.teach.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.muzhi.common.annotation.Excel;
@@ -11,6 +13,8 @@ import com.muzhi.common.core.domain.BaseEntity;
  * @author hhh
  * @date 2025-04-05
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class Clazz extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -41,72 +45,72 @@ public class Clazz extends BaseEntity
     /** 课程安排ID */
     private Long scheduleId;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
 
-    public void setCollegeId(Long collegeId) 
+    public void setCollegeId(Long collegeId)
     {
         this.collegeId = collegeId;
     }
 
-    public Long getCollegeId() 
+    public Long getCollegeId()
     {
         return collegeId;
     }
 
-    public void setExpertiseId(Long expertiseId) 
+    public void setExpertiseId(Long expertiseId)
     {
         this.expertiseId = expertiseId;
     }
 
-    public Long getExpertiseId() 
+    public Long getExpertiseId()
     {
         return expertiseId;
     }
 
-    public void setClassNumber(String classNumber) 
+    public void setClassNumber(String classNumber)
     {
         this.classNumber = classNumber;
     }
 
-    public String getClassNumber() 
+    public String getClassNumber()
     {
         return classNumber;
     }
 
-    public void setGrade(String grade) 
+    public void setGrade(String grade)
     {
         this.grade = grade;
     }
 
-    public String getGrade() 
+    public String getGrade()
     {
         return grade;
     }
 
-    public void setStudentCount(Long studentCount) 
+    public void setStudentCount(Long studentCount)
     {
         this.studentCount = studentCount;
     }
 
-    public Long getStudentCount() 
+    public Long getStudentCount()
     {
         return studentCount;
     }
 
-    public void setScheduleId(Long scheduleId) 
+    public void setScheduleId(Long scheduleId)
     {
         this.scheduleId = scheduleId;
     }
 
-    public Long getScheduleId() 
+    public Long getScheduleId()
     {
         return scheduleId;
     }

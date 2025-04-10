@@ -2,8 +2,11 @@ package com.muzhi.teach.mapper;
 
 import java.util.List;
 
+import com.muzhi.common.enums.BusinessType;
+import com.muzhi.teach.annotation.AutoFill;
 import com.muzhi.teach.domain.Clazz;
 import com.muzhi.teach.domain.vo.ClazzVO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 班级管理Mapper接口
@@ -11,6 +14,7 @@ import com.muzhi.teach.domain.vo.ClazzVO;
  * @author hhh
  * @date 2025-04-05
  */
+@Mapper
 public interface ClassMapper {
     /**
      * 查询班级管理
@@ -34,6 +38,7 @@ public interface ClassMapper {
      * @param clazz 班级管理
      * @return 结果
      */
+    @AutoFill(value = BusinessType.INSERT)
     public int insertClass(Clazz clazz);
 
     /**
@@ -42,6 +47,7 @@ public interface ClassMapper {
      * @param clazz 班级管理
      * @return 结果
      */
+    @AutoFill(value = BusinessType.UPDATE)
     public int updateClass(Clazz clazz);
 
     /**

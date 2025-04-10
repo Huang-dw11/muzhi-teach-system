@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </select>
     <select id="selectClassVOList" resultType="com.muzhi.teach.domain.vo.ClazzVO">
-        select tc.*,te.expertise_name,te.college_name from tb_expertise te left join tb_class tc on te.id = tc.expertise_id
+        select tc.*,te.expertise_name,te.college_name from tb_class tc left join tb_expertise te on te.id = tc.expertise_id
         <where>
             <if test="collegeId != null "> and tc.college_id = #{collegeId}</if>
             <if test="expertiseId != null "> and tc.expertise_id = #{expertiseId}</if>
