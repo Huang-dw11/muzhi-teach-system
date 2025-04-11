@@ -127,3 +127,14 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+#文件上传
+huawei-obs:
+  - platform: huawei-obs-1 # 存储平台标识
+    enable-storage: true  # 启用存储
+    access-key: ??
+    secret-key: ??
+    end-point: ??
+    bucket-name: ??
+    domain: ?? # 访问域名，注意“/”结尾，例如：http://abc.obs.com/
+    base-path: test/ # 基础路径
