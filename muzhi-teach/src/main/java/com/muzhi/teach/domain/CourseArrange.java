@@ -9,8 +9,8 @@ import com.muzhi.common.core.domain.BaseEntity;
 /**
  * 课程安排对象 tb_course_arrange
  * 
- * @author hhh
- * @date 2025-04-10
+ * @author hdw
+ * @date 2025-04-12
  */
 public class CourseArrange extends BaseEntity
 {
@@ -46,6 +46,14 @@ public class CourseArrange extends BaseEntity
     @Excel(name = "教室编号")
     private String classroomCode;
 
+    /** 星期 */
+    @Excel(name = "星期")
+    private Integer weekday;
+
+    /** 上课时间 */
+    @Excel(name = "上课时间")
+    private Integer classTime;
+
     /** 学分 */
     @Excel(name = "学分")
     private BigDecimal credit;
@@ -54,8 +62,8 @@ public class CourseArrange extends BaseEntity
     @Excel(name = "学时")
     private Integer classHours;
 
-    /** 课程周数(如：1-12) */
-    @Excel(name = "课程周数(如：1-12)")
+    /** 课程周数 */
+    @Excel(name = "课程周数")
     private String courseWeeks;
 
     /** 班级人数 */
@@ -150,6 +158,26 @@ public class CourseArrange extends BaseEntity
         return classroomCode;
     }
 
+    public void setWeekday(Integer weekday) 
+    {
+        this.weekday = weekday;
+    }
+
+    public Integer getWeekday() 
+    {
+        return weekday;
+    }
+
+    public void setClassTime(Integer classTime) 
+    {
+        this.classTime = classTime;
+    }
+
+    public Integer getClassTime() 
+    {
+        return classTime;
+    }
+
     public void setCredit(BigDecimal credit) 
     {
         this.credit = credit;
@@ -221,6 +249,8 @@ public class CourseArrange extends BaseEntity
             .append("name", getName())
             .append("courseType", getCourseType())
             .append("classroomCode", getClassroomCode())
+            .append("weekday", getWeekday())
+            .append("classTime", getClassTime())
             .append("credit", getCredit())
             .append("classHours", getClassHours())
             .append("courseWeeks", getCourseWeeks())

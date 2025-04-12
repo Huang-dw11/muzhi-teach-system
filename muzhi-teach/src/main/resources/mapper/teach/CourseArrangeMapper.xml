@@ -13,6 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="courseType"    column="course_type"    />
         <result property="classroomCode"    column="classroom_code"    />
+        <result property="weekday"    column="weekday"    />
+        <result property="classTime"    column="class_time"    />
         <result property="credit"    column="credit"    />
         <result property="classHours"    column="class_hours"    />
         <result property="courseWeeks"    column="course_weeks"    />
@@ -26,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCourseArrangeVo">
-        select id, course_code, open_course_code, course_name, teacher_no, name, course_type, classroom_code, credit, class_hours, course_weeks, class_size, assessment_method, semester, create_time, update_time, create_by, update_by from tb_course_arrange
+        select id, course_code, open_course_code, course_name, teacher_no, name, course_type, classroom_code, weekday, class_time, credit, class_hours, course_weeks, class_size, assessment_method, semester, create_time, update_time, create_by, update_by from tb_course_arrange
     </sql>
 
     <select id="selectCourseArrangeList" parameterType="CourseArrange" resultMap="CourseArrangeResult">
@@ -45,13 +47,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertCourseArrange" parameterType="CourseArrange" useGeneratedKeys="true" keyProperty="id">
         insert into tb_course_arrange
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="courseCode != null">course_code,</if>
+            <if test="courseCode != null and courseCode != ''">course_code,</if>
             <if test="openCourseCode != null">open_course_code,</if>
-            <if test="courseName != null">course_name,</if>
+            <if test="courseName != null and courseName != ''">course_name,</if>
             <if test="teacherNo != null">teacher_no,</if>
             <if test="name != null">name,</if>
             <if test="courseType != null">course_type,</if>
-            <if test="classroomCode != null">classroom_code,</if>
+            <if test="classroomCode != null and classroomCode != ''">classroom_code,</if>
+            <if test="weekday != null">weekday,</if>
+            <if test="classTime != null">class_time,</if>
             <if test="credit != null">credit,</if>
             <if test="classHours != null">class_hours,</if>
             <if test="courseWeeks != null">course_weeks,</if>
@@ -64,13 +68,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="courseCode != null">#{courseCode},</if>
+            <if test="courseCode != null and courseCode != ''">#{courseCode},</if>
             <if test="openCourseCode != null">#{openCourseCode},</if>
-            <if test="courseName != null">#{courseName},</if>
+            <if test="courseName != null and courseName != ''">#{courseName},</if>
             <if test="teacherNo != null">#{teacherNo},</if>
             <if test="name != null">#{name},</if>
             <if test="courseType != null">#{courseType},</if>
-            <if test="classroomCode != null">#{classroomCode},</if>
+            <if test="classroomCode != null and classroomCode != ''">#{classroomCode},</if>
+            <if test="weekday != null">#{weekday},</if>
+            <if test="classTime != null">#{classTime},</if>
             <if test="credit != null">#{credit},</if>
             <if test="classHours != null">#{classHours},</if>
             <if test="courseWeeks != null">#{courseWeeks},</if>
@@ -87,13 +93,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateCourseArrange" parameterType="CourseArrange">
         update tb_course_arrange
         <trim prefix="SET" suffixOverrides=",">
-            <if test="courseCode != null">course_code = #{courseCode},</if>
+            <if test="courseCode != null and courseCode != ''">course_code = #{courseCode},</if>
             <if test="openCourseCode != null">open_course_code = #{openCourseCode},</if>
-            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseName != null and courseName != ''">course_name = #{courseName},</if>
             <if test="teacherNo != null">teacher_no = #{teacherNo},</if>
             <if test="name != null">name = #{name},</if>
             <if test="courseType != null">course_type = #{courseType},</if>
-            <if test="classroomCode != null">classroom_code = #{classroomCode},</if>
+            <if test="classroomCode != null and classroomCode != ''">classroom_code = #{classroomCode},</if>
+            <if test="weekday != null">weekday = #{weekday},</if>
+            <if test="classTime != null">class_time = #{classTime},</if>
             <if test="credit != null">credit = #{credit},</if>
             <if test="classHours != null">class_hours = #{classHours},</if>
             <if test="courseWeeks != null">course_weeks = #{courseWeeks},</if>

@@ -41,7 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCourse" resultType="com.muzhi.teach.domain.Course">
         select id, course_code, college_id, course_name, course_type, credit, class_hours from tb_course
         <where>
-            and id = #{id} or course_code = #{courseCode}
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="courseCode != null">
+                AND course_code = #{courseCode}
+            </if>
         </where>
     </select>
 

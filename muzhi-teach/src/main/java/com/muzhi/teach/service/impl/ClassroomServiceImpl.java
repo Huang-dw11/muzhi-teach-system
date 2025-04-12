@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.muzhi.teach.mapper.ClassroomMapper;
 import com.muzhi.teach.domain.Classroom;
 import com.muzhi.teach.service.IClassroomService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 教室管理Service业务层处理
@@ -60,6 +61,7 @@ public class ClassroomServiceImpl implements IClassroomService {
         ClassroomUsage classroomUsage = new ClassroomUsage();
         classroomUsage.setClassroomCode(classroom.getClassroomCode());
         for (int i = 0; i < 4; i++) {
+            classroomUsage.setClassTime(i+1);
             classroomUsageMapper.insertClassroomUsage(classroomUsage);
         }
 
@@ -85,8 +87,14 @@ public class ClassroomServiceImpl implements IClassroomService {
      * @param ids 需要删除的教室管理主键
      * @return 结果
      */
+    @Transactional
     @Override
     public int deleteClassroomByIds(Long[] ids) {
+        for (Long id : ids) {
+            Classroom classroom = selectClassroomById(id);
+            classroomUsageMapper.deleteClassroomUsageByCRCode(classroom.getClassroomCode());
+        }
+
         return classroomMapper.deleteClassroomByIds(ids);
     }
 
@@ -96,8 +104,12 @@ public class ClassroomServiceImpl implements IClassroomService {
      * @param id 教室管理主键
      * @return 结果
      */
+    @Transactional
     @Override
     public int deleteClassroomById(Long id) {
+        Classroom classroom = selectClassroomById(id);
+        classroomUsageMapper.deleteClassroomUsageByCRCode(classroom.getClassroomCode());
+
         return classroomMapper.deleteClassroomById(id);
     }
 
